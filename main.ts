@@ -102,7 +102,6 @@ scene.onOverlapTile(SpriteKind.Player, myTiles.tile2, function (sprite, location
                 `)
             game.showLongText("When you find the item, you'll be teleported back to town, head toward the pink light next.", DialogLayout.Bottom)
             spawnLevelCompleter()
-            teleportPlayer()
         } else if (playerRoom == "beach") {
         	
         } else if (playerRoom == "quarry") {
@@ -153,9 +152,18 @@ function checkPlayerCollision () {
     	
     } else if (playerRoom == "quarry") {
     	
+    } else if (playerRoom == "town") {
+        let mySprite = 0
+        if (mySprite) {
+        	
+        }
+    } else {
+    	
     }
 }
 scene.onOverlapTile(SpriteKind.Player, myTiles.tile9, function (sprite, location) {
+    forestCat.destroy()
+    forestTunnel.destroy()
     showPlace("beach")
     tiles.placeOnRandomTile(playerSprite, myTiles.tile10)
     beachCat = sprites.create(img`
@@ -174,7 +182,7 @@ scene.onOverlapTile(SpriteKind.Player, myTiles.tile9, function (sprite, location
         . . f 9 a 9 f 9 f . . . . . 
         . . . f f f f f f . . . . . 
         `, SpriteKind.NPC)
-    tiles.placeOnRandomTile(beachCat, myTiles.tile10)
+    tiles.placeOnRandomTile(beachCat, myTiles.tile2)
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.buttonTealDepressed, function (sprite, location) {
     showPlace("forest")
@@ -267,6 +275,24 @@ function showPlace (place: string) {
             ................................................
             `, [myTiles.transparency16,sprites.castle.tileGrass1,sprites.castle.tileGrass3,sprites.castle.tileGrass2,sprites.vehicle.roadIntersection3,sprites.vehicle.roadIntersection1,sprites.vehicle.roadTurn1,sprites.vehicle.roadIntersection2,sprites.vehicle.roadIntersection4,sprites.vehicle.roadTurn4,sprites.vehicle.roadTurn3,sprites.dungeon.buttonTealDepressed,sprites.dungeon.buttonPink,sprites.vehicle.roadTurn2,sprites.castle.shrub,sprites.castle.rock2,sprites.castle.saplingOak,sprites.builtin.coral1,sprites.castle.tilePath5,sprites.dungeon.buttonOrangeDepressed], TileScale.Sixteen))
     } else if (place == "forest") {
+        tiles.setTilemap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000`, img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, [myTiles.transparency16], TileScale.Sixteen))
         game.showLongText("Welcome to the magical forest", DialogLayout.Center)
         effects.starField.startScreenEffect()
         tiles.setTilemap(tiles.createTilemap(hex`200020000202020202020202020202020202020a0a020202020202020202020202020202020202020202020202020202020202030302020202020202020202020202020202020505050505050505050505020203030202060606060606060606060602020202050505050505050505050502020303020206040606060606060606060202020205040505050505050504050202030302020604060606060606060b06020202020504050505050505050405020203030202060406060606060606060602020202050405050505050505040502020303020206040606060606060606060202020205040505050505050504050202030302020604060606060606060606020202020504040404040404040405020203030202060406060606060606060602020202050405050505050505040502020303020206040606060606060606060202020205040505050505050504050202030302020604060606060606060606020202020504050505050505050405020203030202060404040404040404040602020202050505050505050505050502020303020206060606060606060606060202020202020202020202020202050202030302020602020202020202020202020202020202020202020202020203020203030202030202020202020202020202020a0303030303030303030303030303010103030303030303030303030303030a0a0303030303030303030303030303010103030303030303030303030303030a020202020202020202020202030202030302020302020202020202020202020202020202020202020202020207020203030202080202020202020202020202020202070707070707070707070702020303020208080808080808080808080202020207040707070707070704070202030302020804080808080808080408020202020707040707070707040707020203030202080408080808080808040802020202070707040707070407070702020303020208040808080808080804080202020207070707040704070707070202030302020804080808080808080408020202020707070707040707070707020203030202080408080808080808040802020202070707070704070707070702020303020208040404040404040404080202020207070707070407070707070202030302020804080808080808080408020202020707070707040707070707020203030202080408080808080808040802020202070707070704070707070702020303020208040808080808080804080202020207070707070707070707070202030302020808080808080808080808020202020202020202020202020202020203030202020202020202020202020202020202020202020202020202020202020909020202020202020202020202020202`, img`
@@ -304,6 +330,25 @@ function showPlace (place: string) {
             ..............2..2..............
             `, [myTiles.transparency16,myTiles.tile2,sprites.castle.tileDarkGrass1,myTiles.tile4,sprites.castle.saplingPine,myTiles.tile5,myTiles.tile6,myTiles.tile7,myTiles.tile8,myTiles.tile3,sprites.builtin.forestTiles0,myTiles.tile9], TileScale.Sixteen))
     } else if (place == "beach") {
+        tiles.setTilemap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000`, img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, [myTiles.transparency16], TileScale.Sixteen))
+        game.showLongText("Welcome to the bubbly beach", DialogLayout.Center)
         effects.bubbles.startScreenEffect(2000)
         tiles.setTilemap(tiles.createTilemap(hex`1000100001010101010101010101030303010101010301010101010301010301030101010101010101010101010103030301010101010101010101010101010101010101010101010103010101010103010101010101010101010101010101010101010101010301010101010101010101010301010101010303030101010101010101010101010103010301010101010301010101010101030303010101010101010101010103010101010101010101010101010101010103010101010101010301010101010101010101010101010101010101010101010101010101010101010101010202020202020202020202020202020202020202020202020202020202020202`, img`
             . . . . . . . . . . . . . . . . 
@@ -345,13 +390,13 @@ function showPlace (place: string) {
             `, [myTiles.transparency16], TileScale.Sixteen))
     }
 }
-let forestCat: Sprite = null
 let beachCat: Sprite = null
+let forestCat: Sprite = null
 let forestController: Sprite = null
 let playerRoom = ""
+let forestTunnel: Sprite = null
 let playerSprite: Sprite = null
 game.splash("Hi")
-let playerName = game.askForString("What's your name?", 12)
 showPlace("town")
 playerSprite = sprites.create(img`
     . . . . . . . . . . . . . . 
@@ -369,9 +414,7 @@ playerSprite = sprites.create(img`
     . . f d b d f d f . . . . . 
     . . . f f f f f f . . . . . 
     `, SpriteKind.Player)
-let forestTunnel = sprites.create(sprites.dungeon.buttonTealDepressed, SpriteKind.ForestTunnel)
-forestTunnel = sprites.create(sprites.dungeon.buttonPink, SpriteKind.BeachTunnel)
-forestTunnel = sprites.create(sprites.dungeon.buttonOrangeDepressed, SpriteKind.QuarryTunnel)
+forestTunnel = sprites.create(sprites.dungeon.buttonTealDepressed, SpriteKind.ForestTunnel)
 tiles.placeOnRandomTile(playerSprite, sprites.vehicle.roadIntersection3)
 playerRoom = ""
 forever(function () {
