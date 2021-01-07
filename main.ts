@@ -103,7 +103,81 @@ scene.onOverlapTile(SpriteKind.Player, myTiles.tile2, function (sprite, location
             game.showLongText("When you find the item, you'll be teleported back to town, head toward the pink light next.", DialogLayout.Bottom)
             spawnLevelCompleter()
         } else if (playerRoom == "beach") {
-        	
+            game.setDialogTextColor(8)
+            game.setDialogFrame(img`
+                .....cccccccccccccc.....
+                ...cbd111111111111dbc...
+                ..cd1111111111111111dc..
+                .cd111111111111111111dc.
+                .b11111111111111111111b.
+                cd11111111111111111111dc
+                c1111111111111111111111c
+                c1111111111111111111111c
+                c1111111111111111111111c
+                c1111111111111111111111c
+                c1111111111111111111111c
+                c1111111111111111111111c
+                c1111111111111111111111c
+                c1111111111111111111111c
+                c1111111111111111111111c
+                c1111111111111111111111c
+                c1111111111111111111111c
+                cd11111111111111111111dc
+                .b11111111111111111111b.
+                .cd111111111111111111dc.
+                ..cd1111111111111111dc..
+                ..b11d111111111111dbc...
+                .b11bcccccccccccccc.....
+                ccccc...................
+                `)
+            game.showLongText("Howzit, brah? Meeting you today is totally rad! Some gnarly wizard blew by here. Really messed up the vibe of the whole place.", DialogLayout.Bottom)
+            game.showLongText("Heard him mumbling something crazy, like some epic spell. How 'bout you help me set the surf right?", DialogLayout.Bottom)
+            game.showLongText("Maybe if you step on those sparkly rocks and say it out right loud, everything'll be totally tubular again! Keep on, my dude", DialogLayout.Bottom)
+            game.setDialogFrame(img`
+                ..ccccc....333.....333.....333...ccccc....
+                .c33b33c..39993...39993...39993.c33b33c...
+                c3b33bb3c3999993339999933399999c3bb33b3c..
+                c33b33b3c9911199999111999991119c3b33b33c..
+                cb33b33bc9199919991999199919991cb33b33bc..
+                c3b33bbbcb99999111999991119999bcbbb33b3c..
+                c3bb3bbd1b11111999111119991111b1dbb3bb3c..
+                .c33bbd1b1111111111111111111111b1dbb33c...
+                ..cccc1b111111111111111111111111b1cccc....
+                .3991bb11111111111111111111111111bb993....
+                399199111111111111111111111111111191993...
+                3991991111111111111111111111111111991993..
+                3991991111111111111111111111111111991993..
+                .399191111111111111111111111111111991993..
+                ..3991911111111111111111111111111191993...
+                ..399191111111111111111111111111191993....
+                ..399191111111111111111111111111191993....
+                .3991911111111111111111111111111191993....
+                399199111111111111111111111111111191993...
+                3991991111111111111111111111111111991993..
+                3991991111111111111111111111111111991993..
+                .399191111111111111111111111111111991993..
+                ..3991911111111111111111111111111191993...
+                ..399191111111111111111111111111191993....
+                ..399191111111111111111111111111191993....
+                .3991911111111111111111111111111191993....
+                399199111111111111111111111111111191993...
+                3991991111111111111111111111111111991993..
+                3991991111111111111111111111111111991993..
+                .399191111111111111111111111111111991993..
+                ..699bb11111111111111111111111111bb1993...
+                ..cccc1b111111111111111111111111b1cccc....
+                .c33bbd1b1111111111111111111111b1dbb33c...
+                c3bb3bbd1b11119991111199911111b1dbb3bb3c..
+                c3b33bbbcb99991119999911199999bcbbb33b3c..
+                cb33b33bc1999199919991999199919cb33b33bc..
+                c33b33b3c9111999991119999911199c3b33b33c..
+                c3b33bb3c9999933399999333999993c3bb33b3c..
+                .c33b33c.39993...39993...39993..c33b33c...
+                ..ccccc...333.....333.....333....ccccc....
+                ..........................................
+                ..........................................
+                `)
+            game.showLongText("", DialogLayout.Full)
         } else if (playerRoom == "quarry") {
         	
         }
@@ -131,7 +205,28 @@ function spawnLevelCompleter () {
             `, SpriteKind.forestController)
         tiles.placeOnRandomTile(forestController, myTiles.tile9)
     } else if (playerRoom == "beach") {
-    	
+        beachRiddleAnswer = game.askForString("What's the spell?", 6)
+        if (beachRiddleAnswer == "clippy") {
+            tiles.setTilemap(tiles.createTilemap(hex`1000100001010101010101010101030303010404010301010101010301010301030104040101010101010101010103030301010101030101010101030101010101010101010103030303030101010101010101010101010101010101050501010101010101010101010101010505010101010101010101010303030101010101030101010101010103010301010101010301010101010101030303010103030303030303010101010101010101010101030101010101010101010101010101030103010101010101010101010101030101010301010101010101010101010101010101010202020202020202020202020202020202020202020202020202020202020202`, img`
+                . . . . . . . . . . 2 2 2 . . . 
+                . . . . . . . . . . 2 . 2 . . . 
+                . . . . . . . . . . 2 2 2 . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . 2 2 2 . . . . . . . . . 
+                . . . . 2 . 2 . . . . . . . . . 
+                . . . . 2 2 2 . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+                . . . . . . . . . . . . . . . . 
+                `, [myTiles.transparency16,myTiles.tile10,sprites.dungeon.hazardWater,sprites.castle.shrub,myTiles.tile2,myTiles.tile11], TileScale.Sixteen))
+            tiles.placeOnRandomTile(quarryCat, myTiles.tile2)
+        }
     } else if (playerRoom == "quarry") {
     	
     }
@@ -149,7 +244,9 @@ function checkPlayerCollision () {
             teleportPlayer()
         }
     } else if (playerRoom == "beach") {
-    	
+        if (playerSprite.tileKindAt(TileDirection.Center, myTiles.tile6)) {
+            spawnLevelCompleter()
+        }
     } else if (playerRoom == "quarry") {
     	
     } else if (playerRoom == "town") {
@@ -184,6 +281,28 @@ scene.onOverlapTile(SpriteKind.Player, myTiles.tile9, function (sprite, location
         `, SpriteKind.NPC)
     tiles.placeOnRandomTile(beachCat, myTiles.tile2)
 })
+scene.onOverlapTile(SpriteKind.Player, myTiles.tile11, function (sprite, location) {
+    beachCat.destroy()
+    showPlace("quarry")
+    tiles.placeOnRandomTile(playerSprite, myTiles.tile10)
+    quarryCat = sprites.create(img`
+        . . . . . . . . . . . . . . 
+        b b b . . . . b b b . . . . 
+        c d d c . . c d d c . . . . 
+        c 4 d d f f d d 4 c . . . . 
+        c 3 4 d 4 4 d 4 3 c . . . . 
+        f 4 3 b b b b 3 4 f . . . . 
+        c e e e e e e e e c . . . . 
+        c e f e e e e f e c . 4 f 4 
+        f e e e e e e e e f . f d f 
+        f 4 e e 4 4 e e c 4 f f e f 
+        . f c c c c c c e 4 4 e 4 f 
+        . f e e e e e e e f f f f . 
+        . . f e 4 e f e f . . . . . 
+        . . . f f f f f f . . . . . 
+        `, SpriteKind.NPC)
+    tiles.placeOnRandomTile(quarryCat, myTiles.tile2)
+})
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.buttonTealDepressed, function (sprite, location) {
     showPlace("forest")
     tiles.placeOnRandomTile(playerSprite, myTiles.tile4)
@@ -214,9 +333,6 @@ function teleportPlayer () {
     	
     }
 }
-scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.buttonOrange, function (sprite, location) {
-    showPlace("quarry")
-})
 function showTryAgainSplash () {
     scene.cameraShake(4, 500)
     game.splash("Oops, that wasn't the right thing to do. Try again!")
@@ -350,7 +466,7 @@ function showPlace (place: string) {
             `, [myTiles.transparency16], TileScale.Sixteen))
         game.showLongText("Welcome to the bubbly beach", DialogLayout.Center)
         effects.bubbles.startScreenEffect(2000)
-        tiles.setTilemap(tiles.createTilemap(hex`1000100001010101010101010101030303010101010301010101010301010301030101010101010101010101010103030301010101010101010101010101010101010101010101010103010101010103010101010101010101010101010101010101010101010301010101010101010101010301010101010303030101010101010101010101010103010301010101010301010101010101030303010101010101010101010103010101010101010101010101010101010103010101010101010301010101010101010101010101010101010101010101010101010101010101010101010202020202020202020202020202020202020202020202020202020202020202`, img`
+        tiles.setTilemap(tiles.createTilemap(hex`1000100001010101010101010101030303010404010301010101010301010301030104040101010101010101010103030301010101010101010101010101010101010101010101010103010101010103010101010101010101010101050501010101010101010301010101010505010101010301010101010303030101010101010101010101010103010301010101010301010101010101030303010101010101010101010103010101010101010101010101010101010103010101010101010301010101010101010101010101010101010101010101010101010101010101010101010202020202020202020202020202020202020202020202020202020202020202`, img`
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
@@ -367,7 +483,7 @@ function showPlace (place: string) {
             . . . . . . . . . . . . . . . . 
             2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
             . . . . . . . . . . . . . . . . 
-            `, [myTiles.transparency16,myTiles.tile10,sprites.dungeon.hazardWater,sprites.castle.shrub], TileScale.Sixteen))
+            `, [myTiles.transparency16,myTiles.tile10,sprites.dungeon.hazardWater,sprites.castle.shrub,myTiles.tile2,myTiles.tile6], TileScale.Sixteen))
     } else if (place == "quarry") {
         effects.blizzard.startScreenEffect()
         tiles.setTilemap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000`, img`
@@ -392,6 +508,8 @@ function showPlace (place: string) {
 }
 let beachCat: Sprite = null
 let forestCat: Sprite = null
+let quarryCat: Sprite = null
+let beachRiddleAnswer = ""
 let forestController: Sprite = null
 let playerRoom = ""
 let forestTunnel: Sprite = null
