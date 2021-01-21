@@ -8,7 +8,7 @@ namespace SpriteKind {
 }
 scene.onOverlapTile(SpriteKind.Player, myTiles.tile2, function (sprite, location) {
     if (controller.A.isPressed()) {
-        if (playerRoom == "forest") {
+        if (playerRoom == "forest" && finishForestDialogue == "false") {
             game.setDialogTextColor(7)
             game.setDialogFrame(img`
                 .....cccccccccccccc.....
@@ -74,7 +74,7 @@ scene.onOverlapTile(SpriteKind.Player, myTiles.tile2, function (sprite, location
                 8888...888....888....88.....8888.
                 .................................
                 `)
-            game.showLongText("Find me where ground matches the color of my one true pairing's head.", DialogLayout.Full)
+            game.showLongText("Find me where ground matches the color of what used to be my old box.", DialogLayout.Full)
             game.setDialogFrame(img`
                 .....cccccccccccccc.....
                 ...cbd111111111111dbc...
@@ -102,8 +102,9 @@ scene.onOverlapTile(SpriteKind.Player, myTiles.tile2, function (sprite, location
                 ccccc...................
                 `)
             game.showLongText("When you find the item, you'll be teleported to the next friend that needs your help.", DialogLayout.Bottom)
+            finishForestDialogue = "true"
             spawnLevelCompleter()
-        } else if (playerRoom == "beach") {
+        } else if (playerRoom == "beach" && finishedBeachDialogue == "false") {
             game.setDialogTextColor(8)
             game.setDialogFrame(img`
                 .....cccccccccccccc.....
@@ -131,7 +132,7 @@ scene.onOverlapTile(SpriteKind.Player, myTiles.tile2, function (sprite, location
                 .b11bcccccccccccccc.....
                 ccccc...................
                 `)
-            game.showLongText("Howzit, brah? Meeting you today is totally rad! Some gnarly wizard blew by here. Really messed up the vibe of the whole place.", DialogLayout.Bottom)
+            game.showLongText("Howzit, brah? I'm Beach Kat! Meeting you today is totally rad! Some gnarly wizard blew by here. Really messed up the vibe of the whole place.", DialogLayout.Bottom)
             game.showLongText("Heard him mumbling something crazy, like some epic spell. How 'bout you help me set the surf right?", DialogLayout.Bottom)
             game.showLongText("Maybe if you step on those sparkly rocks and say it out right loud, everything'll be totally tubular again! Keep on, my dude", DialogLayout.Bottom)
             game.setDialogFrame(img`
@@ -180,7 +181,7 @@ scene.onOverlapTile(SpriteKind.Player, myTiles.tile2, function (sprite, location
                 `)
             game.showLongText("Long have I helped those who gaze upon me, those who consult me receive believe in the true art of word.", DialogLayout.Full)
             finishedBeachDialogue = "true"
-        } else if (playerRoom == "quarry") {
+        } else if (playerRoom == "quarry" && finishedQuarryDialogue == "false") {
             game.setDialogTextColor(12)
             game.setDialogFrame(img`
                 ..bbabbaabbaabbaabbbbb..
@@ -208,26 +209,73 @@ scene.onOverlapTile(SpriteKind.Player, myTiles.tile2, function (sprite, location
                 .addbbabddabddabddabdda.
                 ..aaabbaabbaabbaabbaaa..
                 `)
-            game.showLongText("Quarry something something windows", DialogLayout.Bottom)
+            game.showLongText("Hi, um i'm sorry i'm a little nervous to talk to strangers that i haven't met yet. *breathes out*", DialogLayout.Bottom)
+            game.showLongText("okay. hi. i'm quarry cat and all the lights in here got turned off by this super mean wizard.", DialogLayout.Bottom)
+            game.showLongText("like from harry potter or something. um, but i think i heard him drop something in his hurry, his powers seemed weaker.", DialogLayout.Bottom)
+            game.showLongText("maybe could you help me find it and restore light to the cave? it's blue like the sky you'd through some windows. ", DialogLayout.Bottom)
+            finishedQuarryDialogue = "true"
+            tiles.setWallAt(tiles.getTileLocation(2, 12), false)
+            spawnLevelCompleter()
         }
     }
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.darkGroundNorthEast1, function (sprite, location) {
     quarryCat.destroy(effects.hearts, 500)
-    tiles.setTilemap(tiles.createTilemap(hex`080008000f0f0f0f0f0f0f0f0e0e0e0e0e0e0e0e0709080a0b0c070d06040404040404050102020202020203101212121212121011111111111111111313131313131313`, img`
-        . . . . . . . . 
-        . . . . . . . . 
-        . . . . . . . . 
-        . . . . . . . . 
-        . . . . . . . . 
-        . . . . . . . . 
-        . . . . . . . . 
-        . . . . . . . . 
-        `, [myTiles.transparency16,sprites.vehicle.roadTurn3,sprites.vehicle.roadIntersection1,sprites.vehicle.roadTurn4,sprites.vehicle.roadIntersection3,sprites.vehicle.roadTurn2,sprites.vehicle.roadTurn1,sprites.builtin.crowd5,sprites.builtin.crowd1,sprites.builtin.crowd0,sprites.builtin.crowd2,sprites.builtin.crowd3,sprites.builtin.crowd4,sprites.builtin.crowd6,sprites.builtin.brick,sprites.dungeon.hazardWater,sprites.castle.saplingPine,sprites.castle.tileGrass1,sprites.castle.tileGrass2,sprites.castle.tileGrass3], TileScale.Sixteen))
+    quarryStone.destroy(effects.hearts, 500)
+    showPlace("win")
+    tiles.placeOnRandomTile(playerSprite, sprites.vehicle.roadIntersection3)
+    playerSprite.say(":) I did it!")
+    beachCat = sprites.create(img`
+        . . . . . . . . . . . . . . 
+        b b b . . . . b b b . . . . 
+        c 9 9 c . . c 9 9 c . . . . 
+        c a 9 9 f f 9 9 a c . . . . 
+        c 3 a 9 a a 9 a 3 c . . . . 
+        f a 3 8 8 8 8 3 a f . . . . 
+        b 9 9 9 9 9 9 9 9 b . . . . 
+        b 9 f 9 9 9 9 f 9 b . a f a 
+        f 9 9 9 9 9 9 9 9 f . f 8 f 
+        f a 9 9 a a 9 9 c a f f 9 f 
+        . f c c c c c c 9 a a 9 a f 
+        . f 9 9 9 9 9 9 9 f f f f . 
+        . . f 9 a 9 f 9 f . . . . . 
+        . . . f f f f f f . . . . . 
+        `, SpriteKind.NPC)
+    forestCat = sprites.create(img`
+        . . . . . . . . . . . . . . 
+        e e e . . . . e e e . . . . 
+        c 7 7 c . . c 7 7 c . . . . 
+        c b 7 7 f f 7 7 b c . . . . 
+        c 3 b 7 7 b 7 b 3 c . . . . 
+        f b 3 6 6 6 6 3 b f . . . . 
+        e 7 7 7 7 7 7 7 7 e . . . . 
+        e 7 f 7 7 7 7 f 7 e . b f b 
+        f 7 7 7 7 7 7 7 7 f . f 6 f 
+        f b 7 7 b b 7 7 c b f f 7 f 
+        . f c c c c c c 7 b b 7 b f 
+        . f 7 7 7 7 7 7 7 f f f f . 
+        . . f 7 b 7 f 7 f . . . . . 
+        . . . f f f f f f . . . . . 
+        `, SpriteKind.NPC)
+    quarryCat = sprites.create(img`
+        . . . . . . . . . . . . . . 
+        b b b . . . . b b b . . . . 
+        c d d c . . c d d c . . . . 
+        c 4 d d f f d d 4 c . . . . 
+        c 3 4 d 4 4 d 4 3 c . . . . 
+        f 4 3 b b b b 3 4 f . . . . 
+        c e e e e e e e e c . . . . 
+        c e f e e e e f e c . 4 f 4 
+        f e e e e e e e e f . f d f 
+        f 4 e e 4 4 e e c 4 f f e f 
+        . f c c c c c c e 4 4 e 4 f 
+        . f e e e e e e e f f f f . 
+        . . f e 4 e f e f . . . . . 
+        . . . f f f f f f . . . . . 
+        `, SpriteKind.NPC)
     tiles.placeOnRandomTile(forestCat, sprites.vehicle.roadTurn3)
     tiles.placeOnRandomTile(beachCat, sprites.vehicle.roadIntersection1)
     tiles.placeOnRandomTile(quarryCat, sprites.vehicle.roadTurn4)
-    tiles.placeOnRandomTile(playerSprite, sprites.vehicle.roadIntersection3)
     effects.confetti.startScreenEffect()
 })
 function spawnLevelCompleter () {
@@ -314,12 +362,6 @@ function checkPlayerCollision () {
         if (playerSprite.tileKindAt(TileDirection.Center, myTiles.tile6)) {
             spawnLevelCompleter()
         }
-    } else if (playerRoom == "quarry") {
-    	
-    } else if (playerRoom == "town") {
-    	
-    } else {
-    	
     }
 }
 scene.onOverlapTile(SpriteKind.Player, myTiles.tile9, function (sprite, location) {
@@ -367,6 +409,12 @@ scene.onOverlapTile(SpriteKind.Player, myTiles.tile11, function (sprite, locatio
         `, SpriteKind.NPC)
     tiles.placeOnRandomTile(quarryCat, myTiles.tile2)
 })
+function playWinMusic () {
+    music.playMelody("C E G B C5 C5 C5 C ", 340)
+    music.playMelody("D G A B C5 C5 C5 D ", 340)
+    music.playMelody("E G A B C5 B C5 C5 ", 340)
+    music.playMelody("C5 C5 - - - - - - ", 340)
+}
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.buttonTealDepressed, function (sprite, location) {
     showPlace("forest")
     tiles.placeOnRandomTile(playerSprite, myTiles.tile4)
@@ -394,7 +442,7 @@ function teleportPlayer () {
     } else if (playerRoom == "beach") {
         tiles.placeOnRandomTile(playerSprite, myTiles.tile10)
     } else if (playerRoom == "quarry") {
-    	
+        tiles.placeOnRandomTile(playerSprite, sprites.dungeon.darkGroundCenter)
     }
 }
 function showTryAgainSplash () {
@@ -404,56 +452,32 @@ function showTryAgainSplash () {
 function showPlace (place: string) {
     playerRoom = place
     if (place == "town") {
-        tiles.setTilemap(tiles.createTilemap(hex`30003000010101010101010101010101010101010101010101010f0b0b0101010101010101010103030303030303030303030301010101020101010101010101010101010101010101010107080f010303030101010101031111111111111111111111030301020111111111111111111101030303010101010101070801010301030101010101031111111111111111111111030101010111010101010101011101030103010101010f010708010103030301010101010311111111111111111111110301030101110101010101010111010303030101010101010708010f010101010101010103111111111111111111111103010101011111111111111111110101010101010101010f07080101010101010101010103111111111111111111111103030101010101010101010101010101010101010101010107080101010101010101010103030311110303030303030303010101010101010d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d07080d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d01010101010101010301010101010d060404040404040404040404040404040404040404040404040404040404040c0d02020202020202010101010101010d0a050505050505050505050505050505050505050505050505050505050505090d02020202030303030101010101010d07080101010101010101010101010102020202020202020202020202020207080d02020202030203010101010101010d07080101010101010101010101010102020202111111111111111111020207080d02020202030303010301030303010d07080101030303030303030303010102020202110202020202020211020207080d02020202020202010101030103010d07080101030101010101010103010102020202110202020202020211020207080d03030302020202010101030303010d07080101030303030303030303010102020202111111111111111111020207080d03020302020101010101010101010d07080101010101010101010101010102020202020202010101010202020207080d03030302020101010202020202020d07080101010101010101010101010102030303030302010101010202020207080d02020202020101020202020202020d07080111111111111111111111110102030202020302010101010202020207080d02020202020101030202020202020d07080111010101010101010101110102030202020302020202020203030307080d02020202020202021111111111020d07080111010101010101010101110102030202020302020202020203020307080d02020202020202031102020211020d07080111111111111111111111110102030303030302020202020203030307080d02020202100202021102020211020d07080101010101010101010101010102020202020202020202020202020207080d10020202020210031102020211020d07080404040404040404040404040c01010604040404040404040404040407080404040404040404021102020211020d07080505050505050505050505050901010a05050505050505050505050507080505050505050505031102020211020d07080202020202020202020202020201010101010101010101010101010107080d02021002020202021102020211020d07080202030303030303030303030201010101010101010101010101010107080d02020202021002031102020211020d07080202030202020202020202030201010101111111111111111111010107080d03030303030202021102020211020d07080202030202020202020202030201010101110101010101010111010107080d03020202030202031111111111020007080202030303030303030303030201010101110101010101010111010107080d03020202030202020202020202020007080202020202020202020202020201010101111111111111111111010107080d03020202030202020202020202020d07080202020201010101020202020201010101010101010101010101010107080d03030303030202010201010103010d07080202020201010101020202020303010101010101010101010101010107080d02020202020201010201010101010d07080202020201010101020202020303010101010101010101010101010107080d02020202020201020201010303030d07080211111111111111111111020303010103030303030101010101010107080d02020202020202020101010301030d07080211110202020202020211020303010103010101030101010101010107080d02020202020202030301010303030d07080211110202020202020211020303010103010101030101010103030307080d02021111111102020301011101010d07080211111111111111111111020303010103010101030101010103010307080d02021102021102030301011101010d07080202020202020202020202020201010103030303030101010103030307080d02021102021102030303011101010d060404040404040404040404040404040404040404040404040404040404040c0d02021102021102020103011101010d0a050505050505050505050505050505050505050505050505050505050505090d02021102021102020103011101010d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d07080d0d0d0d0d0d0d0d0d0d0d0d0d02020d02021102021102020103011101010111010101010101010101010101010107080202020202020202020202020202020202021102021102030303011101010111011111111111111111111101010107080e02021111111111111111111103030302021102021102020201011101010111011101010101010101011101010e0708020202110202020202020202110302030202110202110202020101110101011101110101010101010101110101010708020e0211020202020202020211030303020211111111020202010111111111110111111111111111111111010101070802020211111111111111111111020202030303030302020202010103030301010103030301020202020101010e0107080e02020303030202020202020202020203020202030202010201010301030101010301030102010102010101010107080202020302030101020202020202020203020202030201`, img`
-            ......................2..2......................
-            ......................2..2......................
-            ......................2..2......................
-            ......................2..2......................
-            ......................2..2......................
-            ......................2..2......................
-            ......................2..2......................
-            .......2222222222222222..2222222222222..2.......
-            .......2................................2.......
-            .......2................................2.......
-            .......2..2222222222222222222222222222..2.......
-            .......2..2..........................2..2.......
-            .......2..2..........................2..2.......
-            .......2..2..........................2..2.......
-            .......2..2..........................2..2.......
-            .......2..2..........................2..2.......
-            .......2..2..........................2..2.......
-            .......2..2..........................2..2.......
-            .......2..2..........................2..2.......
-            .......2..2..........................2..2.......
-            .......2..2..........................2..2.......
-            .......2..2222222222222222222222222222..22222222
-            .......2...............22.......................
-            .......2...............22.......................
-            .......2..2222222222222222222222222222..22222222
-            .......2..2..........................2..2.......
-            .......2..2..........................2..2.......
-            .......2..2..........................2..2.......
-            ..........2..........................2..2.......
-            ..........2..........................2..2.......
-            .......2..2..........................2..2.......
-            .......2..2..........................2..2.......
-            .......2..2..........................2..2.......
-            .......2..2..........................2..2.......
-            .......2..2..........................2..2.......
-            .......2..2..........................2..2.......
-            .......2..2..........................2..2.......
-            .......2..2222222222222222222222222222..2.......
-            .......2................................2.......
-            .......2................................2.......
-            .......2.22222222222222..2222222222222..2.......
-            ................................................
-            ................................................
-            ................................................
-            ................................................
-            ................................................
-            ................................................
-            ................................................
-            `, [myTiles.transparency16,sprites.castle.tileGrass1,sprites.castle.tileGrass3,sprites.castle.tileGrass2,sprites.vehicle.roadIntersection3,sprites.vehicle.roadIntersection1,sprites.vehicle.roadTurn1,sprites.vehicle.roadIntersection2,sprites.vehicle.roadIntersection4,sprites.vehicle.roadTurn4,sprites.vehicle.roadTurn3,sprites.dungeon.buttonTealDepressed,sprites.vehicle.roadTurn2,sprites.castle.shrub,sprites.castle.rock2,sprites.castle.saplingOak,sprites.builtin.coral1,sprites.castle.tilePath5], TileScale.Sixteen))
+        tiles.setTilemap(tiles.createTilemap(hex`200018000101010101010101010101010101010e0b0b01010101010101030303030303030101010101010101010101010101010107080e010303030101030f0f0f0f0f030f0f0f0f0f0f01030303010101010101070801010301030101030f0f0f0f0f0301010101010f01030103010101010e01070801010303030101030f0f0f0f0f0301010101010f010303030101010101010708010e0101010101030f0f0f0f0f030f0f0f0f0f0f0101010101010101010e070801010101010101030f0f0f0f0f0301010101010101010101010101010101070801010101010101030303030303030d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d07080d0d0d0d0d0d0d0d0d0d0d0d0d0d0d06040404040404040404040404040404040404040404040404040404040c010d0a0505050505050505050505050505050505050505050505050505050509010d010101010101010101010101010101020202020202020202020202020202010d010101010101010101010101010101020202030303030303030303030202010101010303030103030303010303030303030303030101020202020303020202010101030103010303030301030101010101010103010102020202030302020201010103030301030303030103030303030303030301010202020203030303030101010101010101010101010101010101010101010101020202020202020101010202020202020101010101010101010101010101010102030303030302010102020202020202030303030f0f0f0f0f0f0f0f0f0f0f0102030202020302010103020202020202030303030f0101010101010101010f01020302020203020202020f0f0f0f0f02030303030f0101010101010101010f01020302020203020202030f0202020f02030303030f0f0f0f0f0f0f0f0f0f0f01020303030303020202020f0202020f0201010101010101010101010101010303030202020202020202030f0202020f0201010101010101010101010101010301030101010101010101020f0202020f020d07080505050505050505050505030303010a050505050505`, img`
+            ...............2..2.............
+            ...............2..2.............
+            ...............2..2.............
+            ...............2..2.............
+            ...............2..2.............
+            ...............2..2.............
+            ...............2..2.............
+            2222222222222222..22222222222222
+            2..............................2
+            2..............................2
+            22222222222222222222222222222222
+            22222222222222222222222222222222
+            ................................
+            ................................
+            ................................
+            ................................
+            ................................
+            ................................
+            ................................
+            ................................
+            ................................
+            ................................
+            ................................
+            .......2...............22.......
+            `, [myTiles.transparency16,sprites.castle.tileGrass1,sprites.castle.tileGrass3,sprites.castle.tileGrass2,sprites.vehicle.roadIntersection3,sprites.vehicle.roadIntersection1,sprites.vehicle.roadTurn1,sprites.vehicle.roadIntersection2,sprites.vehicle.roadIntersection4,sprites.vehicle.roadTurn4,sprites.vehicle.roadTurn3,sprites.dungeon.buttonTealDepressed,sprites.vehicle.roadTurn2,sprites.castle.shrub,sprites.castle.saplingOak,sprites.castle.tilePath5], TileScale.Sixteen))
     } else if (place == "forest") {
         tiles.setTilemap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000`, img`
             . . . . . . . . . . . . . . . . 
@@ -531,18 +555,18 @@ function showPlace (place: string) {
         game.showLongText("Welcome to the bubbly beach", DialogLayout.Center)
         effects.bubbles.startScreenEffect(2000)
         tiles.setTilemap(tiles.createTilemap(hex`1000100001010101010101010101030303010404010301010101010301010301030104040101010101010101010103030301010101010101010101010101010101010101010101010103010101010103010101010101010101010101050501010101010101010301010101010505010101010301010101010303030101010101010101010101010103010301010101010301010101010101030303010101010101010101010103010101010101010101010101010101010103010101010101010301010101010101010101010101010101010101010101010101010101010101010101010202020202020202020202020202020202020202020202020202020202020202`, img`
+            . . . . . . . . . . 2 2 2 . . . 
+            . 2 . . . . . 2 . . 2 . 2 . . . 
+            . . . . . . . . . . 2 2 2 . . . 
             . . . . . . . . . . . . . . . . 
+            . . . . . 2 . . . . . 2 . . . . 
             . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
+            . . 2 . . . . . . . . . . . 2 . 
+            . . . . 2 2 2 . . . . . . . . . 
+            . . . . 2 . 2 . . . . . 2 . . . 
+            . . . . 2 2 2 . . . . . . . . . 
+            . . 2 . . . . . . . . . . . . . 
+            . . . . 2 . . . . . . . 2 . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
@@ -567,8 +591,27 @@ function showPlace (place: string) {
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             `, [myTiles.transparency16], TileScale.Sixteen))
-        effects.blizzard.startScreenEffect(2000)
-        tiles.setTilemap(tiles.createTilemap(hex`1000100002030303030314030303030303030304090a0a0a0a150b0f0a0a18110a1a1a05090a0a0a0a0a130a0a0a0a110a1a1a05090a0a0a0a0a0a0a0a0a0a110a0a0a05090d0f100a0a0a0a0a0a0a120d0d0e05090a0a0a0a0a0a0a140a0a0116190a05090a0a16140a0a150a0f0a0a0a0a0a05090a0a0a13160a0a130a0a0a0a0a0a05090a0a0a0a0a0a0a0a0a0a0a0a0a0a05090a0a0a0a0a0a0a0a0a0a0a17010a05090a150d0f160a0a0a0a0a0a01160a05090a0a19160a0a0a18140a0a14100a05090a0a0a0a0a0a0a150a0f0a130a0a05090a0a0a0a0a0a0a0a130a0a0a0a0a05090a0a0a0a0a0a0a0a0a0a0a0a0a0c0508070707070707070707070707070706`, img`
+        effects.blizzard.startScreenEffect()
+        tiles.setTilemap(tiles.createTilemap(hex`1000100002030303030303030303030303030304090a0a0a0a0a0a0a0a0a18110a1a1a05090a0a0a0a0a0a0a0a0a0a110a1a1a05090a0a0a0a0a0a0a0a0a0a110a0a0a05090d0f100a0a0a0a0a0a0a120d0d0e05090a0a0a0a0a0a0a140a0a0116190a05090a0a16140a0a150a0f0a0a0a0a0a05090a0a0a13160a0a130a0a0a0a0a0a05090a0a0a0a0a0a0a0a0a0a0a0a0a0a05090a0a0a0a0a0a0a0a0a0a0a17010a05090a150d0f160a0a0a0a0a0a01160a05090a0a19160a0a0a18140a0a14100a05090a1b0a0a0a0a0a150a0f0a130a0a0509150b0f0a0a0a0a0a130a0a0a0a0a05090a130a0a0a0a0a0a0a0a0a0a0a0c0508070707070707070707070707070706`, img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . 2 2 . . . . 
+            . . . . . . . . . . . 2 . . . . 
+            . . . . . . . . . . . 2 . . . . 
+            . 2 2 2 . . . . . . . 2 2 2 2 . 
+            . . . . . . . . 2 . . 2 2 2 . . 
+            . . . 2 2 . . 2 2 2 . . . . . . 
+            . . . . 2 2 . . 2 . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . 2 2 . . 
+            . . 2 2 2 2 . . . . . . 2 2 . . 
+            . . . 2 2 . . . 2 2 . . 2 2 . . 
+            . . 2 . . . . . 2 . 2 . 2 . . . 
+            . 2 . 2 . . . . . 2 . . . . . . 
+            . . 2 . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, [myTiles.transparency16,sprites.dungeon.floorDark5,sprites.dungeon.darkGroundNorthWest0,sprites.dungeon.darkGroundNorth,sprites.dungeon.darkGroundNorthEast0,sprites.dungeon.darkGroundEast,sprites.dungeon.darkGroundSouthEast0,sprites.dungeon.darkGroundSouth,sprites.dungeon.darkGroundSouthWest0,sprites.dungeon.darkGroundWest,sprites.dungeon.darkGroundCenter,sprites.dungeon.darkGroundNorthEast1,sprites.dungeon.darkGroundNorthWest1,sprites.dungeon.doorClosedWest,sprites.dungeon.doorClosedEast,sprites.dungeon.doorOpenEast,sprites.dungeon.doorLockedWest,sprites.dungeon.doorClosedNorth,sprites.dungeon.doorClosedSouth,sprites.dungeon.doorOpenSouth,sprites.dungeon.doorOpenNorth,sprites.dungeon.doorOpenWest,sprites.dungeon.floorDark3,sprites.dungeon.floorDark1,sprites.dungeon.doorLockedEast,sprites.dungeon.doorLockedNorth,myTiles.tile2,sprites.dungeon.floorLight3], TileScale.Sixteen))
+    } else if (place == "win") {
+        tiles.setTilemap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000`, img`
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
@@ -585,16 +628,29 @@ function showPlace (place: string) {
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
-            `, [myTiles.transparency16,sprites.dungeon.floorDark5,sprites.dungeon.darkGroundNorthWest0,sprites.dungeon.darkGroundNorth,sprites.dungeon.darkGroundNorthEast0,sprites.dungeon.darkGroundEast,sprites.dungeon.darkGroundSouthEast0,sprites.dungeon.darkGroundSouth,sprites.dungeon.darkGroundSouthWest0,sprites.dungeon.darkGroundWest,sprites.dungeon.darkGroundCenter,sprites.dungeon.darkGroundNorthEast1,sprites.dungeon.darkGroundNorthWest1,sprites.dungeon.doorClosedWest,sprites.dungeon.doorClosedEast,sprites.dungeon.doorOpenEast,sprites.dungeon.doorLockedWest,sprites.dungeon.doorClosedNorth,sprites.dungeon.doorClosedSouth,sprites.dungeon.doorOpenSouth,sprites.dungeon.doorOpenNorth,sprites.dungeon.doorOpenWest,sprites.dungeon.floorDark3,sprites.dungeon.floorDark1,sprites.dungeon.doorLockedEast,sprites.dungeon.doorLockedNorth,myTiles.tile2], TileScale.Sixteen))
+            `, [myTiles.transparency16], TileScale.Sixteen))
+        effects.blizzard.startScreenEffect()
+        tiles.setTilemap(tiles.createTilemap(hex`0a0008000f0f0f0f0f0f0f0f0f0f0e0e0e0e0e0e0e0e0e0e0709080a0b0c070d0b0c0604040404040404040501020202020202020203101212121212121212101111111111111111131313131313131313131313`, img`
+            . . . . . . . . . . 
+            . . . . . . . . . . 
+            . . . . . . . . . . 
+            . . . . . . . . . . 
+            . . . . . . . . . . 
+            . . . . . . . . . . 
+            . . . . . . . . . . 
+            . . . . . . . . . . 
+            `, [myTiles.transparency16,sprites.vehicle.roadTurn3,sprites.vehicle.roadIntersection1,sprites.vehicle.roadTurn4,sprites.vehicle.roadIntersection3,sprites.vehicle.roadTurn2,sprites.vehicle.roadTurn1,sprites.builtin.crowd5,sprites.builtin.crowd1,sprites.builtin.crowd0,sprites.builtin.crowd2,sprites.builtin.crowd3,sprites.builtin.crowd4,sprites.builtin.crowd6,sprites.builtin.brick,sprites.dungeon.hazardWater,sprites.castle.saplingPine,sprites.castle.tileGrass1,sprites.castle.tileGrass2,sprites.castle.tileGrass3], TileScale.Sixteen))
     }
 }
-let quarryStone: Sprite = null
 let beachRiddleAnswer = ""
 let forestController: Sprite = null
-let beachCat: Sprite = null
 let forestCat: Sprite = null
+let beachCat: Sprite = null
+let quarryStone: Sprite = null
 let quarryCat: Sprite = null
+let finishedQuarryDialogue = ""
 let finishedBeachDialogue = ""
+let finishForestDialogue = ""
 let playerRoom = ""
 let forestTunnel: Sprite = null
 let playerSprite: Sprite = null
@@ -619,9 +675,34 @@ playerSprite = sprites.create(img`
 forestTunnel = sprites.create(sprites.dungeon.buttonTealDepressed, SpriteKind.ForestTunnel)
 tiles.placeOnRandomTile(playerSprite, sprites.vehicle.roadIntersection3)
 playerRoom = ""
+finishForestDialogue = "false"
 finishedBeachDialogue = "false"
+finishedQuarryDialogue = "false"
 forever(function () {
     controller.moveSprite(playerSprite)
     scene.cameraFollowSprite(playerSprite)
     checkPlayerCollision()
+    if (controller.A.isPressed() && playerRoom == "win") {
+        playWinMusic()
+        game.splash("The End")
+        tiles.setTilemap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000`, img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, [myTiles.transparency16], TileScale.Sixteen))
+        game.over(true)
+    }
 })
