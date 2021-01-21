@@ -1,5 +1,5 @@
  # The Adventures of Ninja Cat 
- //[adventures cover photo place here]
+ ![Adventures_Of_Ninja_Cat_CoverPhoto](https://github.com/angsabrina/the-adventures-of-ninja-cat/blob/master/ninja_cat_cover.png?raw=true)
  ### ...awaits you
  The game follows the story of Ninja Cat, the player’s embodiment in a town where a wizard has run through and messed things up for Ninja Cat’s friends. The player will progress through several levels, solving riddles and finding items to help set things right. 
  
@@ -12,7 +12,7 @@
 
  
  ## No PyBadge? No Problem! 
-> Open this page at [https://angsabrina.github.io/the-adventures-of-ninja-cat/](https://angsabrina.github.io/the-adventures-of-ninja-cat/) to play the game in browser
+> Open [https://angsabrina.github.io/the-adventures-of-ninja-cat/](https://angsabrina.github.io/the-adventures-of-ninja-cat/) to play the game in browser.
 
 
 ## Edit this project ![Build status badge](https://github.com/angsabrina/the-adventures-of-ninja-cat/workflows/MakeCode/badge.svg)
