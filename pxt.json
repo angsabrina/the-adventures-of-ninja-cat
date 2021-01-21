@@ -1,5 +1,6 @@
 {
     "name": "The Adventures of Ninja Cat",
+    "version": "1.0.0",
     "description": "",
     "dependencies": {
         "device": "*"
