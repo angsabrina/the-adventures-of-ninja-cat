@@ -6,6 +6,18 @@ namespace SpriteKind {
     export const forestController = SpriteKind.create()
     export const quarryStone = SpriteKind.create()
 }
+function removeForestWalls () {
+    if (playerRoom == "forest") {
+        tiles.setWallAt(tiles.getTileLocation(12, 14), false)
+        tiles.setWallAt(tiles.getTileLocation(13, 14), false)
+        tiles.setWallAt(tiles.getTileLocation(18, 14), false)
+        tiles.setWallAt(tiles.getTileLocation(19, 14), false)
+        tiles.setWallAt(tiles.getTileLocation(12, 17), false)
+        tiles.setWallAt(tiles.getTileLocation(13, 17), false)
+        tiles.setWallAt(tiles.getTileLocation(18, 17), false)
+        tiles.setWallAt(tiles.getTileLocation(19, 17), false)
+    }
+}
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.darkGroundNorthEast1, function (sprite, location) {
     quarryCat.destroy(effects.hearts, 500)
     quarryStone.destroy(effects.hearts, 500)
@@ -263,6 +275,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`tile2`, function (sprite, loc
                 ccccc...................
                 `)
             finishForestDialogue = "true"
+            removeForestWalls()
             spawnLevelCompleter()
         } else if (playerRoom == "beach" && finishedBeachDialogue == "false") {
             music.wawawawaa.play()
